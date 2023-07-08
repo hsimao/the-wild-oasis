@@ -2,13 +2,7 @@ import styled from 'styled-components'
 import GlobalStyles from './styles/GlobalStyles'
 import Button from './ui/Button'
 import Input from './ui/Input'
-
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-  color: red;
-  color: #333333;
-`
+import Heading from './ui/Heading'
 
 const StyledApp = styled.div`
   background-color: red;
@@ -19,10 +13,14 @@ function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <H1>Hello</H1>
+        <Heading as="h1">Hello h1</Heading>
         <Button>
           <span>hello</span>
         </Button>
+
+        <Heading as="h2">Hello H2</Heading>
+        <Heading as="h3">Hello h3</Heading>
+
         <Button>Btn2</Button>
         <Input />
       </StyledApp>
