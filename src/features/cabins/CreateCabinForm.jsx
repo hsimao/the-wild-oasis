@@ -11,7 +11,7 @@ import FormRow from '../../ui/FormRow'
 
 import { createEditCabin } from '../../services/apiCabins'
 
-function CreateCabinForm({ cabinToEdit = {}, onSubmitted }) {
+function CreateCabinForm({ cabinToEdit = {}, onSubmitted = () => null }) {
   const { id: editId, ...editValues } = cabinToEdit
   const isEditSession = Boolean(editId)
 
