@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import { useState } from 'react'
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2'
 
 import CreateCabinForm from './CreateCabinForm'
 import { useDeleteCabin } from './useDeleteCabin'
 import { formatCurrency } from '../../utils/helpers'
 import { useCreateCabin } from './useCreateCabin'
+import ConfirmDelete from '../../ui/ConfirmDelete'
+import Modal from '../../ui/Modal'
 
 const TableRow = styled.div`
   display: grid;
@@ -47,8 +48,6 @@ const Discount = styled.div`
 `
 
 function CabinRow({ cabin }) {
-  const [showForm, setShowForm] = useState(false)
-
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin
 
@@ -81,20 +80,32 @@ function CabinRow({ cabin }) {
           <button disabled={isCreating} onClick={handleDuplicate}>
             <HiSquare2Stack />
           </button>
-          <button onClick={() => setShowForm((show) => !show)}>
-            <HiPencil />
-          </button>
-          <button onClick={() => deleteCabin(id)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
+
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="cabins"
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(id)}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {showForm && (
-        <CreateCabinForm
-          cabinToEdit={cabin}
-          onSubmitted={() => setShowForm(false)}
-        />
-      )}
     </>
   )
 }
