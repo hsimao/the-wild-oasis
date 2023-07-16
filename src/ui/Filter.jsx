@@ -50,7 +50,9 @@ function Filter({ filterField, options = [] }) {
         <FilterButton
           key={option.value}
           onClick={() => handleClick(option.value)}
-          active={option.value === currentFilter}
+          // fix react-dom error, 使用 + boolean 將 true false 轉換成 1 or 0 https://maximeblanc.fr/blog/how-to-fix-the-received-true-for-a-non-boolean-attribute-error/
+          active={+Boolean(option.value === currentFilter)}
+          disabled={option.value === currentFilter}
         >
           {option.label}
         </FilterButton>

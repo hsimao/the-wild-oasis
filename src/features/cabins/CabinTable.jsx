@@ -10,8 +10,8 @@ function CabinTable() {
   const { isLoading, cabins } = useCabins()
   const [searchParams] = useSearchParams()
 
+  // Filter
   const filterValue = searchParams.get('discount') || 'all'
-
   const filteredCabins = useMemo(() => {
     if (!cabins?.length) return []
 
@@ -25,6 +25,15 @@ function CabinTable() {
 
     return cabins
   }, [cabins, filterValue])
+
+  // Sort
+  const sortBy = searchParams.get('sortBy') || 'startDate-asc'
+  const sortedCabins = useMemo(() => {
+    const [field, direction] = sortBy.split('-')
+    const modifier = direction === 'asc' ? 1 : -1
+    const cloneFilteredCabins = [...filteredCabins]
+    return cloneFilteredCabins.sort((a, b) => (a[field] - b[field]) * modifier)
+  }, [sortBy, filteredCabins])
 
   if (isLoading) return <Spinner />
 
@@ -41,7 +50,7 @@ function CabinTable() {
         </Table.Header>
 
         <Table.Body
-          data={filteredCabins}
+          data={sortedCabins}
           render={(cabin) => <CabinRow key={cabin.id} cabin={cabin} />}
         />
       </Table>
