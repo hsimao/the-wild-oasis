@@ -10,12 +10,13 @@ import FormRow from '../../ui/FormRow'
 import { useCreateCabin } from './useCreateCabin'
 import { useEditCabin } from './useEditCabin'
 
-function CreateCabinForm({ cabinToEdit = {}, onSubmitted = () => null }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal = () => null }) {
   const { isCreating, createCabin } = useCreateCabin()
   const { isEditing, editCabin } = useEditCabin()
   const isWorking = isCreating || isEditing
 
   const { id: editId, ...editValues } = cabinToEdit
+
   const isEditSession = Boolean(editId)
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
@@ -33,7 +34,7 @@ function CreateCabinForm({ cabinToEdit = {}, onSubmitted = () => null }) {
         {
           onSuccess: () => {
             reset()
-            onSubmitted()
+            onCloseModal()
           },
         }
       )
