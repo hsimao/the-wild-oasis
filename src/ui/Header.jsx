@@ -1,4 +1,4 @@
-import { styled } from 'styled-components'
+import styled from 'styled-components'
 import Logout from '../features/authentication/Logout'
 
 const StyledHeader = styled.header`

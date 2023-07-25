@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { HiEllipsisVertical } from 'react-icons/hi2'
 import styled from 'styled-components'
@@ -83,8 +83,7 @@ function Menus({ children }) {
 }
 
 function Toggle({ id }) {
-  const { openId, close, open, position, setPosition } =
-    useContext(MenusContext)
+  const { openId, close, open, setPosition } = useContext(MenusContext)
 
   function handleClick(e) {
     // 往上找屬性是 button 的元素資訊
